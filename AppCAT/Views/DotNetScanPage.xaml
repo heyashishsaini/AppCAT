@@ -1,0 +1,321 @@
+﻿<Page x:Class="AppCAT.Views.DotNetScanPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AppCAT — .NET Scan"
+       
+        Background="{StaticResource BackgroundBrush}">
+
+    <Grid>
+        <Border Style="{StaticResource CardBorder}"
+                Margin="30">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- ═══ HEADER ═══ -->
+                <StackPanel Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            Margin="0,8,0,12">
+
+                    <TextBlock Text="Scan .NET Application"
+                               FontSize="22" FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Margin="0,6,0,4"/>
+                    <TextBlock Text="Analyze your application for Azure migration"
+                               FontSize="13"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                </StackPanel>
+
+                <!-- ═══ FORM ═══ -->
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+
+                        <Separator Background="#E0E0E0"
+                                   Margin="0,0,0,14"/>
+
+                        <!-- ROW 1: Project Path -->
+                        <TextBlock Text="Solution / Project Path"
+                                   FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0,0,0,5"/>
+                        <Border Background="White" CornerRadius="4"
+                                BorderBrush="#D0D0D0" BorderThickness="1"
+                                Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtProjectPath"
+                                         BorderThickness="0"
+                                         Padding="10,8"
+                                         FontSize="12"
+                                         Background="Transparent"/>
+                                <Button Grid.Column="1"
+                                        Content="📁"
+                                        Style="{StaticResource SecondaryButton}"
+                                        Padding="14,8"
+                                        FontSize="11"
+                                        Click="BrowseProject_Click"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- ROW 2: Report Location -->
+                        <TextBlock Text="Report Save Location"
+                                   FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0,0,0,5"/>
+                        <Border Background="White" CornerRadius="4"
+                                BorderBrush="#D0D0D0" BorderThickness="1"
+                                Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtReportPath"
+                                         BorderThickness="0"
+                                         Padding="10,8"
+                                         FontSize="12"
+                                         Background="Transparent"/>
+                                <Button Grid.Column="1"
+                                        Content="📁"
+                                        Style="{StaticResource SecondaryButton}"
+                                        Padding="14,8"
+                                        FontSize="11"
+                                        Click="BrowseReport_Click"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- ROW 3: Report Format + Scan Options -->
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Report Format -->
+                            <StackPanel Grid.Column="0"
+                                        Margin="0,0,30,0">
+                                <TextBlock Text="Report Format"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox x:Name="CmbFormat"
+                                          SelectedIndex="0"
+                                          Padding="8,6"
+                                          FontSize="12"
+                                          MinWidth="160">
+                                    <ComboBoxItem Content="APPMODJSON"
+                                                  Tag="APPMODJSON"/>
+                                    <ComboBoxItem Content="HTML"
+                                                  Tag="html"/>
+                                    <ComboBoxItem Content="JSON"
+                                                  Tag="json"/>
+                                    <ComboBoxItem Content="CSV"
+                                                  Tag="csv"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <!-- Target -->
+                            <StackPanel Grid.Column="1"
+                                        Margin="0,0,30,0">
+                                <TextBlock Text="Target"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox x:Name="CmbTarget"
+                                          SelectedIndex="0"
+                                          Padding="8,6"
+                                          FontSize="12"
+                                          MinWidth="160">
+                                    
+                                    <ComboBoxItem Content="Any"
+                                                  Tag="Any"/>
+                                    
+                                    <ComboBoxItem Content="Azure App Service (Windows)"
+                                                  Tag="AppService.Windows"/>
+                                    <ComboBoxItem Content="Azure App Service (Linux)"
+                                                  Tag="AppService.Linux"/>
+                                    
+                                    <ComboBoxItem Content="Azure Kubernetes Service (Windows)"
+                                                  Tag="AKS.Windows"/>
+                                    <ComboBoxItem Content="Azure Kubernetes Service (Linux)"
+                                                  Tag="AKS.Linux"/>
+
+                                    <ComboBoxItem Content="Azure Container Apps"
+                                                  Tag="ACA"/>
+
+                                    <ComboBoxItem Content="Azure App Service Container (Windows)"
+                                                  Tag="AppServiceContainer.Windows"/>
+                                    <ComboBoxItem Content="Azure App Service Container (Linux)"
+                                                  Tag="AppServiceContainer.Linux"/>
+
+                                    <ComboBoxItem Content="Azure App Service Managed Instance"
+                                                  Tag="AppServiceManagedInstance.Windows"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <!-- Scan Options -->
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Scan Options"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           Margin="0,0,0,5"/>
+                                <WrapPanel VerticalAlignment="Center"
+                                           Margin="0,4,0,0">
+                                    <CheckBox x:Name="ChkCode"
+                                              Content="Source Code"
+                                              IsChecked="True"
+                                              FontSize="12"
+                                              Margin="0,0,24,0"
+                                              Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    <CheckBox x:Name="ChkBinaries"
+                                              Content="Binaries"
+                                              FontSize="12"
+                                              Margin="0,0,24,0"
+                                              Foreground="{StaticResource TextPrimaryBrush}"/>
+                                </WrapPanel>
+                            </StackPanel>
+
+                        </Grid>
+
+                        <!-- Scan Log -->
+                        <Border Background="#F8F8F8"
+                                CornerRadius="4"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="1"
+                                Padding="12" Height="120">
+                            <ScrollViewer x:Name="LogScroll"
+                                          VerticalScrollBarVisibility="Auto">
+                                <TextBlock x:Name="TxtLog"
+                                           FontFamily="Consolas"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                            </ScrollViewer>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- ═══ PROGRESS ═══ -->
+                <StackPanel Grid.Row="2" Margin="0,8,0,5">
+                    <TextBlock x:Name="TxtStatus"
+                               FontSize="12"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               Margin="0,0,0,4"/>
+                    <ProgressBar x:Name="ProgressBar"
+                                 Height="8"
+                                 Minimum="0" Maximum="100"
+                                 Background="#E8E8E8"
+                                 Foreground="{StaticResource PrimaryBrush}"/>
+                </StackPanel>
+
+                <!-- ═══ BUTTONS ═══ -->
+                <StackPanel Grid.Row="3"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            Margin="0,10,0,10">
+
+                    <Button x:Name="BtnBack"
+        Content="Back"
+        Style="{StaticResource SecondaryButton}"
+        Width="140"
+        Margin="0,0,12,0"
+        Click="Back_Click"/>
+
+
+                    <Button x:Name="BtnOpenReport"
+            Content="Open Report"
+            Style="{StaticResource SecondaryButton}"
+            Width="140" Margin="0,0,12,0"
+            IsEnabled="False"
+            Click="OpenReport_Click"/>
+
+                    <!-- Run Scan (visible initially) -->
+                    <Button x:Name="BtnRun"
+            Content="Run Scan"
+            Style="{StaticResource PrimaryButton}"
+            Width="140" Margin="0,0,12,0"
+            Click="RunScan_Click"/>
+
+                    <!-- Cancel (visible during scan) -->
+                    <Button x:Name="BtnCancel"
+            Content="Cancel"
+            Width="140" Margin="0,0,12,0"
+            Visibility="Collapsed"
+            Click="CancelScan_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background"
+                        Value="#E53935"/>
+                                <Setter Property="Foreground"
+                        Value="White"/>
+                                <Setter Property="FontSize"
+                        Value="14"/>
+                                <Setter Property="FontWeight"
+                        Value="SemiBold"/>
+                                <Setter Property="Cursor"
+                        Value="Hand"/>
+                                <Setter Property="Padding"
+                        Value="24,10"/>
+                                <Setter Property="BorderThickness"
+                        Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate
+                            TargetType="Button">
+                                            <Border
+                                x:Name="Bd"
+                                Background=
+                                  "{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding=
+                                  "{TemplateBinding Padding}">
+                                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger
+                                    Property="IsMouseOver"
+                                    Value="True">
+                                                    <Setter
+                                        TargetName="Bd"
+                                        Property="Background"
+                                        Value="#C62828"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <!-- Scan Again (replaces Run Scan after completion) -->
+                    <Button x:Name="BtnScanAgain"
+            Content="Scan Again"
+            Style="{StaticResource PrimaryButton}"
+            Width="140" Margin="0,0,12,0"
+            Visibility="Collapsed"
+            Click="RunScan_Click"/>
+
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
